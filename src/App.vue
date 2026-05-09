@@ -1,9 +1,7 @@
 <template>
-  <CashierView />
+  <RouterView />
 </template>
 
 <script setup>
-
-import CashierView from './views/CashierView.vue'
-
+import { RouterView } from 'vue-router'
 </script>
