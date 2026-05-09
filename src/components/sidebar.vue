@@ -9,10 +9,22 @@
         Dashboard
       </RouterLink>
 
-      <RouterLink to="/" class="menu" active-class="active"> Kasir </RouterLink>
+      <RouterLink to="/" class="menu" active-class="active"> kasir </RouterLink>
+
+      <RouterLink to="/products" class="menu" active-class="active">
+        Produk
+      </RouterLink>
 
       <RouterLink to="/transactions" class="menu" active-class="active">
         Riwayat
+      </RouterLink>
+
+      <RouterLink to="/expenses" class="menu" active-class="active">
+        Pengeluaran
+      </RouterLink>
+
+      <RouterLink to="/reports" class="menu" active-class="active">
+        Laporan
       </RouterLink>
     </div>
   </div>

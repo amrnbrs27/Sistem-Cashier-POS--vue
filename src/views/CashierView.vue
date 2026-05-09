@@ -167,10 +167,12 @@ import { ref, computed, watch } from "vue";
 import Sidebar from "../components/Sidebar.vue";
 import ProductCard from "../components/ProductCard.vue";
 import CartItem from "../components/CartItem.vue";
+import { defaultProducts } from "../data/products";
 
-import { products } from "../data/products";
 const showMobileSidebar = ref(false);
 const showCheckout = ref(false);
+const products =
+  JSON.parse(localStorage.getItem("products")) || defaultProducts;
 const cart = ref(JSON.parse(localStorage.getItem("cart")) || []);
 
 const search = ref("");
@@ -194,13 +196,28 @@ const filteredProducts = computed(() => {
 });
 
 const addToCart = (product) => {
+  if (product.stock <= 0) {
+    alert("Stock habis");
+
+    return;
+  }
+
   const existingItem = cart.value.find((item) => item.id === product.id);
+
+  // VALIDASI STOCK
+
+  if (existingItem && existingItem.quantity >= product.stock) {
+    alert("Stock tidak mencukupi");
+
+    return;
+  }
 
   if (existingItem) {
     existingItem.quantity++;
   } else {
     cart.value.push({
       ...product,
+
       quantity: 1,
     });
   }
@@ -248,6 +265,24 @@ const handleCheckoutSuccess = () => {
     "transactions",
 
     JSON.stringify(transactions),
+  );
+
+  const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+
+  cart.value.forEach((cartItem) => {
+    const productIndex = allProducts.findIndex(
+      (product) => product.id === cartItem.id,
+    );
+
+    if (productIndex !== -1) {
+      allProducts[productIndex].stock -= cartItem.quantity;
+    }
+  });
+
+  localStorage.setItem(
+    "products",
+
+    JSON.stringify(allProducts),
   );
 
   alert("Pembayaran berhasil");

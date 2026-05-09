@@ -11,11 +11,21 @@
         {{ formatRupiah(product.price) }}
       </p>
 
+      <p
+        class="text-sm mt-2"
+        :class="product.stock <= 5 ? 'text-red-500' : 'text-green-500'"
+      >
+        Stock:
+        {{ product.stock }}
+      </p>
+
       <button
         @click="$emit('add-to-cart', product)"
-        class="mt-3 bg-green-500 text-white w-full py-2 rounded-xl"
+        :disabled="product.stock <= 0"
+        class="mt-3 w-full py-2 rounded-xl text-white"
+        :class="product.stock <= 0 ? 'bg-gray-400' : 'bg-green-500'"
       >
-        Tambah
+        {{ product.stock <= 0 ? "Stock Habis" : "Tambah" }}
       </button>
     </div>
   </div>

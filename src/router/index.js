@@ -9,10 +9,36 @@ from '../views/CashierView.vue'
 import DashboardView
 from '../views/DashboardView.vue'
 
+import ProductView
+from '../views/ProductView.vue'
+
 import TransactionView
 from '../views/TransactionView.vue'
 
+import ExpenseView
+from '../views/ExpenseView.vue'
+
+import ReportView
+from '../views/ReportView.vue'
+
 const routes = [
+  {
+  path: '/reports',
+  name: 'reports',
+  component: ReportView
+},
+{
+  path: '/expenses',
+  name: 'expenses',
+  component: ExpenseView
+},
+
+{
+  path: '/products',
+  name: 'products',
+  component: ProductView
+},
+
     {
     path: '/dashboard',
     name: 'dashboard',

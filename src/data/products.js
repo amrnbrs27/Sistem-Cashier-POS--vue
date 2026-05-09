@@ -1,37 +1,33 @@
-export const products = [
+export const defaultProducts = [
+
   {
     id: 1,
-    name: "Kopi Susu",
+    name: 'Cappuccino',
     price: 18000,
-    category: "Coffee",
+    category: 'Coffee',
+    stock: 20,
     image:
-      "https://images.unsplash.com/photo-1517701604599-bb29b565090c",
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93'
   },
 
   {
     id: 2,
-    name: "Americano",
-    price: 16000,
-    category: "Coffee",
+    name: 'Latte',
+    price: 22000,
+    category: 'Coffee',
+    stock: 25,
     image:
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085",
+      'https://images.unsplash.com/photo-1517701604599-bb29b565090c'
   },
 
   {
     id: 3,
-    name: "Matcha Latte",
-    price: 22000,
-    category: "Non Coffee",
+    name: 'Croissant',
+    price: 15000,
+    category: 'Food',
+    stock: 16,
     image:
-      "https://images.unsplash.com/photo-1515823064-d6e0c04616a7",
-  },
+      'https://images.unsplash.com/photo-1555507036-ab1f4038808a'
+  }
 
-  {
-    id: 4,
-    name: "Chicken Bowl",
-    price: 25000,
-    category: "Food",
-    image:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-  },
 ]
