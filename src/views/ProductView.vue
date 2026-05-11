@@ -4,14 +4,18 @@
       <Sidebar />
     </div>
 
-    <div class="flex-1 p-4 lg:p-6 bg-gray-100 min-h-screen">
+    <div
+      class="flex-1 p-4 lg:p-6 bg-gray-100 dark:bg-gray-900 min-h-screen text-black dark:text-white"
+    >
       <!-- HEADER -->
 
       <div class="flex justify-between items-center">
         <div>
-          <h1 class="text-3xl font-bold">Produk</h1>
+          <h1 class="text-3xl font-bold dark:text-white">Produk</h1>
 
-          <p class="text-gray-500 mt-1">Management produk toko</p>
+          <p class="text-gray-500 dark:text-gray-400 mt-1">
+            Management produk toko
+          </p>
         </div>
 
         <button
@@ -28,7 +32,7 @@
         <div
           v-for="product in products"
           :key="product.id"
-          class="bg-white rounded-3xl overflow-hidden"
+          class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden"
         >
           <img :src="product.image" class="w-full h-48 object-cover" />
 
@@ -37,7 +41,7 @@
               {{ product.name }}
             </h2>
 
-            <p class="text-gray-500 mt-1">
+            <p class="text-gray-500 dark:text-gray-400 mt-1">
               {{ product.category }}
             </p>
 
@@ -83,7 +87,7 @@
         v-if="showModal"
         class="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50"
       >
-        <div class="bg-white rounded-3xl p-6 w-full max-w-md">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 w-full max-w-md">
           <div class="flex justify-between items-center">
             <h2 class="text-2xl font-bold">
               {{ isEdit ? "Edit Produk" : "Tambah Produk" }}
@@ -99,21 +103,21 @@
               v-model="form.name"
               type="text"
               placeholder="Nama produk"
-              class="w-full p-4 border rounded-2xl"
+              class="w-full p-4 border rounded-2xl bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
 
             <input
               v-model="form.price"
               type="number"
               placeholder="Harga"
-              class="w-full p-4 border rounded-2xl"
+              class="w-full p-4 border rounded-2xl bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
 
             <input
               v-model="form.stock"
               type="number"
               placeholder="Stock produk"
-              class="w-full p-4 border rounded-2xl"
+              class="w-full p-4 border rounded-2xl bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white"
             />
 
             <select
@@ -130,13 +134,15 @@
             </select>
 
             <div>
-              <label class="text-sm text-gray-500"> Upload Gambar </label>
+              <label class="text-sm text-gray-500 dark:text-gray-400">
+                Upload Gambar
+              </label>
 
               <input
                 type="file"
                 accept="image/*"
                 @change="handleImageUpload"
-                class="w-full mt-2 p-3 border rounded-2xl bg-white"
+                class="w-full mt-2 p-3 border rounded-2xl bg-white dark:bg-gray-800"
               />
               <img
                 v-if="form.image"
@@ -232,8 +238,6 @@ const editProduct = (product) => {
   };
 };
 
-
-
 const handleSubmit = () => {
   if (
     !form.value.name ||
@@ -253,7 +257,7 @@ const handleSubmit = () => {
       form.value,
     );
   } else {
-    addProduct(form.value)
+    addProduct(form.value);
   }
 
   form.value = {

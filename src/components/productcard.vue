@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-2xl overflow-hidden shadow-sm">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm">
     <img :src="product.image" class="w-full h-40 object-cover" />
 
     <div class="p-4">

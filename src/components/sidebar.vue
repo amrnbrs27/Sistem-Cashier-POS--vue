@@ -1,15 +1,15 @@
 <template>
-  <div class="w-64 min-h-screen bg-white border-r p-5">
-    <h1 class="text-2xl font-bold mb-1">SRBN POS</h1>
+  <div class="w-64 min-h-screen bg-white dark:bg-gray-800 border-r p-5">
+    <h1 class="text-2xl font-bold mb-1 dark:text-white">SRBN POS</h1>
 
     <p class="text-gray-500 text-sm mb-10">Sistem management penjualan</p>
 
-    <div class="space-y-3">
+    <div class="space-y-3 dark:text-white">
       <RouterLink to="/dashboard" class="menu" active-class="active">
         Dashboard
       </RouterLink>
 
-      <RouterLink to="/" class="menu" active-class="active"> kasir </RouterLink>
+      <RouterLink to="/" class="menu" active-class="active"> Kasir </RouterLink>
 
       <RouterLink to="/products" class="menu" active-class="active">
         Produk
@@ -26,22 +26,39 @@
       <RouterLink to="/reports" class="menu" active-class="active">
         Laporan
       </RouterLink>
+
+      <button
+        @click="toggleTheme"
+        class="mt-8 w-full bg-black dark:bg-white dark:text-black text-white py-3 rounded-2xl"
+      >
+        {{ isDark ? "Light Mode ☀️" : "Dark Mode 🌙" }}
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
+import { useTheme } from "../composables/useTheme";
+
+const {
+  isDark,
+
+  toggleTheme,
+} = useTheme();
 </script>
 
 <style scoped>
 .menu {
   @apply block
+  flex
   p-3
   rounded-xl
   cursor-pointer
   hover:bg-gray-100
-  transition;
+  transition
+  dark:text-gray-200
+  dark:hover:bg-gray-700;
 }
 
 .active {

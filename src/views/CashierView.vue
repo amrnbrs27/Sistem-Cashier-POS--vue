@@ -38,21 +38,25 @@
 
     <!-- MAIN CONTENT -->
 
-    <div class="flex-1 p-4 lg:p-6 bg-gray-100 min-h-screen">
+    <div
+      class="flex-1 p-4 lg:p-6 bg-gray-100 dark:bg-gray-900 min-h-screen text-black dark:text-white"
+    >
       <div class="lg:hidden flex justify-between items-center mb-5">
         <h1 class="text-2xl font-bold">CASHIER</h1>
 
         <button
           @click="showMobileSidebar = true"
-          class="bg-white px-4 py-2 rounded-xl shadow"
+          class="bg-white dark:bg-gray-800 px-4 py-2 rounded-xl shadow"
         >
           Menu
         </button>
       </div>
       <div class="hidden lg:block">
-        <h1 class="text-2xl lg:text-3xl font-bold">CASHIER</h1>
+        <h1 class="text-2xl lg:text-3xl font-bold dark:text-white">CASHIER</h1>
 
-        <p class="text-gray-500 mt-1">Pilih produk dan proses pembayaran</p>
+        <p class="text-gray-500 dark:text-gray-400 mt-1">
+          Pilih produk dan proses pembayaran
+        </p>
       </div>
 
       <!-- SEARCH -->
@@ -61,7 +65,7 @@
         v-model="search"
         type="text"
         placeholder="Cari nama produk"
-        class="w-full mt-6 p-3 lg:p-4 rounded-2xl border"
+        class="w-full bg-white dark:bg-gray-800 dark:text-white dark:border-gray-700 mt-6 p-3 lg:p-4 rounded-2xl border"
       />
 
       <!-- CATEGORY -->
@@ -98,9 +102,11 @@
 
     <!-- CART -->
 
-    <div class="w-full lg:w-96 bg-white p-5 border-t lg:border-l lg:border-t-0">
-      <div class="flex justify-between items-center">
-        <h2 class="text-2xl font-bold">Keranjang</h2>
+    <div
+      class="w-full lg:w-96 bg-white dark:bg-gray-800 p-5 border-t lg:border-l lg:border-t-0"
+    >
+      <div class="flex justify-between items-center ">
+        <h2 class="text-2xl font-bold dark:text-white">Keranjang</h2>
 
         <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm">
           {{ cart.length }}
@@ -124,7 +130,7 @@
       <!-- TOTAL -->
 
       <div class="mt-10">
-        <div class="flex justify-between text-xl font-bold">
+        <div class="flex justify-between text-xl font-bold dark:text-white">
           <span>Total</span>
 
           <span>
@@ -168,6 +174,9 @@ import Sidebar from "../components/Sidebar.vue";
 import ProductCard from "../components/ProductCard.vue";
 import CartItem from "../components/CartItem.vue";
 import { defaultProducts } from "../data/products";
+import { useTransactions } from "../composables/useTransactions";
+
+const { addTransaction } = useTransactions();
 
 const showMobileSidebar = ref(false);
 const showCheckout = ref(false);
@@ -247,29 +256,19 @@ const clearCart = () => {
   cart.value = [];
 };
 const handleCheckoutSuccess = () => {
-  const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+  const purchasedItems = [...cart.value];
 
-  const newTransaction = {
-    id: Date.now(),
-
+  addTransaction({
     total: totalPrice.value,
 
-    items: cart.value,
+    items: purchasedItems,
 
     date: new Date().toLocaleString(),
-  };
-
-  transactions.unshift(newTransaction);
-
-  localStorage.setItem(
-    "transactions",
-
-    JSON.stringify(transactions),
-  );
+  });
 
   const allProducts = JSON.parse(localStorage.getItem("products")) || [];
 
-  cart.value.forEach((cartItem) => {
+  purchasedItems.forEach((cartItem) => {
     const productIndex = allProducts.findIndex(
       (product) => product.id === cartItem.id,
     );
@@ -312,10 +311,10 @@ watch(
 
 <style scoped>
 .category {
-  @apply px-4 py-2 rounded-full bg-white;
+  @apply px-4 py-2 rounded-full dark:bg-gray-800;
 }
 
 .active {
-  @apply bg-green-500 text-white;
+  @apply bg-green-500 dark:bg-green-500 text-white;
 }
 </style>
