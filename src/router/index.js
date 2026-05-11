@@ -21,8 +21,16 @@ from '../views/ExpenseView.vue'
 import ReportView
 from '../views/ReportView.vue'
 
+import SettingView 
+from "../views/SettingView.vue";
+
 const routes = [
-  {
+{
+  path: "/settings",
+  component: SettingView,
+},
+
+{
   path: '/reports',
   name: 'reports',
   component: ReportView

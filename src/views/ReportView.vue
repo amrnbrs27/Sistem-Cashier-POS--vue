@@ -4,12 +4,27 @@
       <Sidebar />
     </div>
 
-    <div class="flex-1 p-4 lg:p-6 bg-gray-100 dark:bg-gray-900 min-h-screen text-black dark:text-white">
+    <div
+      class="flex-1 p-4 lg:p-6 bg-gray-100 dark:bg-gray-900 min-h-screen text-black dark:text-white"
+    >
       <!-- HEADER -->
 
-      <h1 class="text-3xl font-bold dark:text-white">Laporan</h1>
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-3xl font-bold dark:text-white">Laporan</h1>
 
-      <p class="text-gray-500 dark:text-gray-400 mt-1">Ringkasan bisnis dan keuangan</p>
+          <p class="text-gray-500 dark:text-gray-400 mt-1">
+            Ringkasan bisnis dan keuangan
+          </p>
+        </div>
+
+        <button
+          @click="exportPDF"
+          class="bg-black dark:bg-gray-800 dark:text-white text-white px-5 py-3 rounded-2xl"
+        >
+          Export PDF
+        </button>
+      </div>
 
       <!-- SUMMARY -->
 
@@ -112,6 +127,8 @@
 </template>
 
 <script setup>
+import jsPDF from "jspdf";
+
 import { computed } from "vue";
 
 import Sidebar from "../components/Sidebar.vue";
@@ -121,6 +138,8 @@ import { formatRupiah } from "../utils/formatRupiah";
 import { useTransactions } from "../composables/useTransactions";
 
 import { useExpenses } from "../composables/useExpenses";
+
+import { useStoreSettings } from "../composables/useStoreSettings";
 
 const {
   transactions,
@@ -139,4 +158,108 @@ const {
 const totalProfit = computed(() => {
   return totalRevenue.value - totalExpense.value;
 });
+
+const { storeSettings } = useStoreSettings();
+
+const exportPDF = () => {
+  console.log("PDF CLICKED");
+
+  const doc = new jsPDF();
+
+  doc.setFontSize(20);
+
+  doc.text(
+    `${storeSettings.value.name} REPORT`,
+
+    20,
+
+    20,
+  );
+
+  doc.setFontSize(10);
+
+  doc.text(
+    storeSettings.value.address,
+
+    20,
+
+    28,
+  );
+
+  doc.text(
+    storeSettings.value.phone,
+
+    20,
+
+    34,
+  );
+
+  doc.setFontSize(12);
+
+  doc.text(
+    `Total Revenue: ${formatRupiah(totalRevenue.value)}`,
+
+    20,
+
+    40,
+  );
+
+  doc.text(
+    `Total Expense: ${formatRupiah(totalExpense.value)}`,
+
+    20,
+
+    50,
+  );
+
+  doc.text(
+    `Net Profit: ${formatRupiah(totalProfit.value)}`,
+
+    20,
+
+    60,
+  );
+
+  doc.text(
+    `Total Transactions: ${totalTransactions.value}`,
+
+    20,
+
+    70,
+  );
+
+  let y = 90;
+
+  doc.setFontSize(16);
+
+  doc.text("Recent Transactions", 20, y);
+
+  y += 10;
+
+  doc.setFontSize(11);
+
+  transactions.value.forEach((transaction) => {
+    doc.text(
+      `#${transaction.id} - ${formatRupiah(transaction.total)}`,
+
+      20,
+
+      y,
+    );
+
+    y += 8;
+
+    doc.text(
+      `${transaction.date}`,
+
+      25,
+
+      y,
+    );
+
+    y += 12;
+  });
+
+  doc.save("report.pdf");
+};
 </script>

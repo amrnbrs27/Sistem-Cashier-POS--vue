@@ -81,6 +81,7 @@
     </div>
   </div>
   <SalesChart />
+  <TopSellingProducts />
 </template>
 
 <script setup>
@@ -97,6 +98,9 @@ import { useTransactions } from "../composables/useTransactions";
 import {
   useExpenses
 } from '../composables/useExpenses'
+
+import TopSellingProducts
+from "../components/TopSellingProducts.vue";
 
 const {
   transactions,

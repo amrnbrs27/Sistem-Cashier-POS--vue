@@ -20,7 +20,7 @@
 
         <button
           @click="showModal = true"
-          class="bg-black text-white px-5 py-3 rounded-2xl"
+          class="bg-black dark:bg-gray-800 text-white px-5 py-3 rounded-2xl"
         >
           Tambah Pengeluaran
         </button>
